@@ -18,39 +18,39 @@ static void  onMouseButton(int Key,int state, int x, int y)
     switch (Key)
     {
     case GLUT_LEFT_BUTTON :
-        xt += 0.2;
+        xt += 0.1;
         glutPostRedisplay();
         break;
 
     case GLUT_RIGHT_BUTTON :
-        xt -= 0.2;
+        xt -= 0.1;
         glutPostRedisplay();
         break;
     }
 }
-GLvoid Transform(GLfloat Width, GLfloat Height)
-{
-    glViewport(0, 0, Width, Height);// bn3ml viwe le onpengl fe eidth w hight bto3 screen
-    glLoadIdentity();   // bnkhly el matrix el bn3ml 3leha el opration identity initially 3lsshn lw h3nml 3leha ay operation
-    gluPerspective(100, Width / Height, 0.1, 150);  //by7dd el zawya el bnbos beha le scene fe badya
-    glMatrixMode(GL_MODELVIEW); // bn7dd a7na han3ml aneu operations
-}
-void init()
-{
-    /**/  glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glClearColor(0, 250,250, 0); // btkhlsy el screen lonha abyd
 
-}
+
 
 GLvoid DrawGLScene()
 {
-
+// initially
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    init();
-    /**/Transform(Xsize, Ysize);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();// reset the matrix
+
+    glClearColor(0, 250,250, 0); // COLOR OR BACKGROUND
+    glViewport(0, 0, Xsize, Ysize);// Size of the edit of opengl screen
+    glLoadIdentity();   // reset the matrix
+    gluPerspective(100, Xsize/Ysize, 0.1, 150);  //control the diminution of the way we look to the scene
+
+
+    glMatrixMode(GL_MODELVIEW); // back to view mode
     glLoadIdentity();
+
     glTranslatef(0, 0, -3.5);
+
+    // associate the variable that we pass and the paramter who's values is 1 so any change in this varaible will cause a change on the value of
     glRotatef(xangle, 1.0, 0.0, 0.0);
     glRotatef(yangle, 0.0, 1.0, 0.0);
     glRotatef(zangle, 0.0, 0.0, 1.0);
@@ -124,7 +124,11 @@ GLvoid DrawGLScene()
     glVertex3f(2.1,0.2,0.6);
 
 ///////////////////MIDDLE //////////////////
-    if(!open) //glColor3f(1, 1,1);
+
+
+
+
+    if(!open)
     {
 
         // front
@@ -305,7 +309,7 @@ GLvoid DrawGLScene()
     glTranslatef(-4, 1, 0.6); //sun coordinate
     glutSolidTorus(0.15, 0.01, 50, 25); // sun DIMANTIONS
 
-    ///////////CLOUD/////////////
+    ///////////FLAT CLOUD/////////////
 
     glColor3f(1, 1, 1);//cloud color
     glTranslatef(1, 0, 0); // cloud coordinate
@@ -379,15 +383,6 @@ void NormalKey(GLubyte key, GLint x, GLint y)
         glutPostRedisplay();
         break;
 
-    case 'u':
-        yt += 0.2;
-        glutPostRedisplay();
-        break;
-
-    case 'd':
-        yt -= 0.2;
-        glutPostRedisplay();
-        break;
 
     case '+':
         zt += 0.2;
@@ -431,8 +426,6 @@ int main(int argc, char **argv)
     glutDisplayFunc(DrawGLScene);
     glutKeyboardFunc(NormalKey);
      glutMouseFunc(onMouseButton);
-
-    Transform(Xsize, Ysize);
 
     glutMainLoop();
     return 1;
