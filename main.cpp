@@ -5,23 +5,22 @@
 #include <math.h>
 #include <string.h>
 #include <graphics.h>
-
 GLint Xsize = 1366;
 GLint Ysize = 768;
 float theta;
-GLfloat xt = 0.0, yt = 0.0, zt = 0.0, xw = 0.0;
+GLfloat xt = 0.0, yt = 0.0, zt = 0.0;
 bool open = 0;
 GLfloat xangle = 7, yangle = 20, zangle = 0.0;
 
 static void onMouseButton(int Key, int state, int x, int y) {
     switch (Key) {
         case GLUT_LEFT_BUTTON :
-            xt += 0.1;
+            xt -= 0.1;
             glutPostRedisplay();
             break;
 
         case GLUT_RIGHT_BUTTON :
-            xt -= 0.1;
+            xt += 0.1;
             glutPostRedisplay();
             break;
     }
@@ -37,13 +36,11 @@ GLvoid DrawGLScene() {
 
     glClearColor(0, 250, 250, 0); // COLOR OR BACKGROUND
     glViewport(0, 0, Xsize, Ysize);// Size of the edit of opengl screen
-    glLoadIdentity();   // reset the matrix
     gluPerspective(100, Xsize / Ysize, 0.1, 150);  //control the diminution of the way we look to the scene
 
 
     glMatrixMode(GL_MODELVIEW); // back to view mode
     glLoadIdentity();
-
     glTranslatef(0, 0, -3.5);
 
     // associate the variable that we pass and the paramter who's values is 1 so any change in this varaible will cause a change on the value of
@@ -64,13 +61,12 @@ GLvoid DrawGLScene() {
     glVertex3f(0.2, 0.4, 0.2);
 
     // front
-
     glVertex3f(0.2, 0.2, 0.6);
     glVertex3f(0.2, 0.4, 0.6);
     glVertex3f(0.2, 0.4, 0.2);
     glVertex3f(0.2, 0.2, 0.2);
 
-//back
+    //back
     glVertex3f(0.6, 0.2, 0.6);
     glVertex3f(0.6, 0.5, 0.6);
     glVertex3f(0.6, 0.5, 0.2);
@@ -176,7 +172,7 @@ GLvoid DrawGLScene() {
     glVertex3f(0.6, 0.2, 0.2);
     glVertex3f(1.8, 0.2, 0.2);
     glVertex3f(1.8, 0.5, 0.2);
-    
+
 ///////////////////////window///////////////////////
 
     glColor3f(0.3, 0.3, 0.3);
@@ -251,8 +247,7 @@ GLvoid DrawGLScene() {
     glTranslatef(0, 0, 0.4);//wheels coordinte
     glutSolidTorus(0.025, 0.07, 10, 25);
 
-
-    //////SUN/////////////////
+    ////////SUN/////////////////
     glColor3f(1, 1, 0);// sun color
     glTranslatef(-4, 1, 0.6); //sun coordinate
     glutSolidTorus(0.15, 0.01, 50, 25); // sun DIMANTIONS
@@ -292,7 +287,6 @@ GLvoid DrawGLScene() {
     glutPostRedisplay();   // btzbt el shkl
     glutSwapBuffers();
 }
-
 
 /*  The function called whenever a "normal" key is pressed. */
 void NormalKey(GLubyte key, GLint x, GLint y) {
@@ -349,7 +343,7 @@ void NormalKey(GLubyte key, GLint x, GLint y) {
 }
 //*************************** Main ***************************************************************
 int main(int argc, char **argv) {
-    
+
     glutInit(&argc, argv);
 
     glutInitDisplayMode(GLUT_RGBA |
